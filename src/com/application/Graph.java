@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class Graph {
 
-    private ArrayList<Task> nodes = new ArrayList<Task>();
-    private HashMap<Integer, Task> map = new HashMap<Integer, Task>();
+    final private ArrayList<Task> nodes = new ArrayList<>();
+    final private HashMap<Integer, Task> map = new HashMap<>();
 
     public void createNode(Task task) {
         int taskNo = task.getTaskNo();
@@ -23,6 +23,5 @@ public class Graph {
         start.addChild(end);
     }
 
-    public ArrayList<Task> getNodes() { return nodes; }
     public Task getNode(int taskNo) { return map.get(taskNo); }
 }

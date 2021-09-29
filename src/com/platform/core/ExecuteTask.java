@@ -22,6 +22,8 @@ public class ExecuteTask extends Thread {
     public void run() {
 
         try {
+            if(task == null) return;
+
             sleep(taskTime);
 
             System.out.println("Completed execution of task: " + task.getTaskNo());

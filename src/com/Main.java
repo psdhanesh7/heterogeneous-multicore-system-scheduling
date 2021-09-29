@@ -6,7 +6,7 @@ import com.platform.Platform;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
         Platform platform = new Platform(1, 1);
         Application app = new Application(7, 6);
 

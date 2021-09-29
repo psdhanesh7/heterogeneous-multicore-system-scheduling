@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Task {
 
-    public enum State { BLANK, READY, RUNNING, COMPLETE };
+    public enum State { BLANK, READY, RUNNING, COMPLETE }
 
     final private  int taskNo;
 
@@ -14,10 +14,11 @@ public class Task {
     final private float alphaHP;
     final private float alphaLP;
 
-    volatile private State state;
-    private ArrayList<Task> children = null;
-    private HashMap<Integer, Task> map = null;
-    private int dependencies;
+    final private ArrayList<Task> children = new ArrayList<>();
+    final private HashMap<Integer, Task> map = new HashMap<>();
+
+    volatile private State state = State.BLANK;
+    private int dependencies = 0;
 
     public Task(int taskNo, float wHP, float wLP, float alphaHP, float alphaLP) {
         this.taskNo = taskNo;
@@ -25,11 +26,6 @@ public class Task {
         this.wLP = wLP;
         this.alphaHP = alphaHP;
         this.alphaLP = alphaLP;
-
-        state = State.BLANK;
-        children = new ArrayList<Task>();
-        map = new HashMap<Integer, Task>();
-        dependencies = 0;
     }
 
     public void addChild(Task child) {
@@ -46,8 +42,8 @@ public class Task {
     public State getState() { return state; }
     public void setState(State state) { this.state = state; }
 
-    public float getwHP() { return wHP; }
-    public float getwLP() { return wLP; }
+    public float getWHP() { return wHP; }
+    public float getWLP() { return wLP; }
 
     public int getTaskNo() { return taskNo; }
     public ArrayList<Task> getChildren() { return children; }

@@ -5,18 +5,17 @@ import java.util.Scanner;
 
 public class Application {
 
-    private int taskCount;
-    private int dependencyCount;
-    private ArrayList<Task> taskList;
-    private Graph dependencyGraph;
+    final private int taskCount;
+    final private int dependencyCount;
+    final private ArrayList<Task> taskList = new ArrayList<>();
+    final private Graph dependencyGraph = new Graph();
 
     public Application(int taskCount, int dependencyCount) {
         this.taskCount = taskCount;
-        this.taskList = new ArrayList<>();
-        this.addTaskDetails();
+        addTaskDetails();
 
         this.dependencyCount = dependencyCount;
-        dependencyGraph = buildDependencyGraph();
+        buildDependencyGraph();
     }
 
     private void addTaskDetails() {
@@ -33,10 +32,9 @@ public class Application {
         }
     }
 
-    private Graph buildDependencyGraph() {
+    private void buildDependencyGraph() {
         Scanner input = new Scanner(System.in);
 
-        Graph dependencyGraph = new Graph();
         for(Task task : taskList) {
             dependencyGraph.createNode(task);
         }
@@ -48,8 +46,6 @@ public class Application {
 
             dependencyGraph.addEdge(first, second);
         }
-
-        return dependencyGraph;
     }
 
     public int getTaskCount() { return taskCount; }
