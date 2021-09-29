@@ -20,26 +20,25 @@ public class ExecuteTask extends Thread {
     }
 
     public void run() {
-//        core.setCoreState(Core.CoreState.PROCESSING);
-//        task.setState(Task.State.RUNNING);
 
         try {
-            this.sleep(taskTime);
+            sleep(taskTime);
+
+            System.out.println("Completed execution of task: " + task.getTaskNo());
+            task.setState(Task.State.COMPLETE);
+            core.setCoreState(Core.CoreState.IDLE);
+
+            ArrayList<Task> children = task.getChildren();
+            for(Task child : children) {
+                child.decrementDependencies();
+            }
+
+            synchronized (platform) {
+                platform.notify();
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-
-        System.out.println("Completed execution of task: " + task.getTaskNo());
-        task.setState(Task.State.COMPLETE);
-        core.setCoreState(Core.CoreState.IDLE);
-
-        ArrayList<Task> children = task.getChildren();
-        for(Task child : children) {
-            child.decrementDependencies();
-        }
-
-        synchronized (platform) {
-            platform.notify();
         }
     }
 }

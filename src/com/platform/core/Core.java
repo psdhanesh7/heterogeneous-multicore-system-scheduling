@@ -1,12 +1,11 @@
 package com.platform.core;
 
-import com.application.Application;
 import com.application.Task;
 import com.platform.Platform;
 
 abstract public class Core {
 
-    public enum CoreState { IDLE, PROCESSING };
+    public enum CoreState { IDLE, PROCESSING }
 
     final float maxFrequency;
     float currentFrequency = 1;

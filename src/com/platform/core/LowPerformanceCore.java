@@ -10,6 +10,9 @@ public class LowPerformanceCore extends Core {
     }
 
     public void executeTask(Platform platform, Task task) {
+        task.setState(Task.State.RUNNING);
+        this.setCoreState(Core.CoreState.PROCESSING);
+
         ExecuteTask thread = new ExecuteTask(this, task, (long) task.getwLP() * 1000, platform);
         thread.start();
     }

@@ -10,6 +10,9 @@ public class HighPerformanceCore extends Core {
     }
 
     public void executeTask(Platform platform, Task task) {
+        task.setState(Task.State.RUNNING);
+        this.setCoreState(Core.CoreState.PROCESSING);
+
         ExecuteTask thread = new ExecuteTask(this, task, (long) task.getwHP() * 1000, platform);
         thread.start();
     }

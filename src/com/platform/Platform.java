@@ -2,7 +2,6 @@ package com.platform;
 
 import com.application.Application;
 import com.application.Task;
-import com.platform.core.Core;
 import com.platform.core.HighPerformanceCore;
 import com.platform.core.LowPerformanceCore;
 
@@ -27,10 +26,7 @@ public class Platform {
         while(toBeProcessed < order.length) {
             Task current = getMaxPriorityTask(order, endOfList);
 
-            // circular dependency case
             if(current == null) {
-//                System.out.println("Circular dependency in dependency graph");
-//                break;
                 synchronized (this) {
                     try {
                         this.wait();
@@ -53,23 +49,13 @@ public class Platform {
             }
 
             if(lowPerformanceCore.isIdle()) {
-                current.setState(Task.State.RUNNING);
-                lowPerformanceCore.setCoreState(Core.CoreState.PROCESSING);
                 lowPerformanceCore.executeTask(this, current);
                 System.out.println("Task " + current.getTaskNo() + " allocated to LP");
             }
             else {
-                current.setState(Task.State.RUNNING);
-                highPerformanceCore.setCoreState(Core.CoreState.PROCESSING);
                 highPerformanceCore.executeTask(this, current);
                 System.out.println("Task " + current.getTaskNo() + " allocated to HP");
             }
-
-            // Remove myself as a dependency
-//            ArrayList<Task> children = current.getChildren();
-//            for(Task child : children) {
-//                child.decrementDependencies();
-//            }
 
             // Add children that have no dependencies
             endOfList = addNonDependent(order, app.getTaskList(), endOfList);
